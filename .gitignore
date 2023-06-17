@@ -24,6 +24,7 @@ _$*
 *.Z
 *.elc
 *.ln
+*.wasm
 core
 # CVS default ignores end
 .deps
