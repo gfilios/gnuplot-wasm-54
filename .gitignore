@@ -27,6 +27,7 @@ _$*
 core
 # CVS default ignores end
 .deps
+*.wasm
 Makefile
 Makefile.in
 aclocal.m4
