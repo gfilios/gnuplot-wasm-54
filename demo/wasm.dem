@@ -1,0 +1,3 @@
+set terminal dumb
+set output "wasmdemoplt.txt"
+plot sin(x)
