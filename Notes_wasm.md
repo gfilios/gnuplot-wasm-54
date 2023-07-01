@@ -12,6 +12,12 @@ To switch between views, press ⇧⌘V in the editor. You can view the preview s
     Todo: adapt build to add below patch during build phase, so that patching is not necessary
     > var Module = typeof Module != 'undefined' ? Module : {};
 
+    becomes 
+    
+    > // var Module = typeof Module != 'undefined' ? Module : {};
+
+    then add the following lines below
+
 ```
     var Module = {
        'arguments': ['-e', ""],
