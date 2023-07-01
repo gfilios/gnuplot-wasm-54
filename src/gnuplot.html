@@ -4,6 +4,61 @@
     </header>
     <body>
         <h1>Hello Gnuplot</h1>
-        <script src="gnuplot"></script>
+        <div id="output"></div>
+    
+    
+        <script>
+
+            var svgString = "";
+            var receivingSVG = false;
+
+            function runCommand(){
+                console.log("RunCommand");
+                callMain(["-e","set terminal svg;plot sin(x);"]);
+                callMain(["-e","set terminal svg;plot cos(x);"]);
+                callMain(["-e","set terminal svg;plot tan(x);"]);
+            }
+
+            function handleGnuplotOutput(text) {
+                if (text.startsWith("<?xml version=")) {
+                    receivingSVG = true;
+                } else if (receivingSVG){
+                    svgString += text;
+                } else {
+                    textOutput(text);
+                }
+
+                if (text.startsWith("</svg>")) {
+                    receivingSVG = false;
+                    appendSvg(svgString);
+                    svgString="";
+                }
+                
+            }
+
+            function textOutput(text){
+                const node = document.createElement("p");
+                const textnode = document.createTextNode(text);
+                node.appendChild(textnode);
+                document.getElementById("output").appendChild(node);
+            }
+
+
+            function appendSvg(svgString) {
+                let svg = svgString;
+                let blob = new Blob([svg], {type: 'image/svg+xml'});
+                let url = URL.createObjectURL(blob);
+                let image = document.createElement('img');  
+                image.src = url;
+                image.addEventListener('load', () => URL.revokeObjectURL(url), {once: true});
+                document.getElementById("output").appendChild(image);
+            }
+
+    
+        </script>
+    
+    
     </body>
+    <script src="gnuplot"></script>
+    
 </html>
