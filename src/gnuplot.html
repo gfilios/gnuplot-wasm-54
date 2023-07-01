@@ -4,7 +4,11 @@
     </header>
     <body>
         <h1>Hello Gnuplot</h1>
-        <div id="output"></div>
+        <textarea name="textarea" id="commandBox" rows="20" cols="50">set title "Hello Gnuplot" &#13;&#10;plot tan(x)</textarea>
+        <input type="submit" value="plot" onclick="submitPlot();" />
+        <div id="image"></div>
+        <div id="output"><img id="plot"/></div>
+    
     
     
         <script>
@@ -14,9 +18,7 @@
 
             function runCommand(){
                 console.log("RunCommand");
-                callMain(["-e","set terminal svg;plot sin(x);"]);
-                callMain(["-e","set terminal svg;plot cos(x);"]);
-                callMain(["-e","set terminal svg;plot tan(x);"]);
+                callMain(["-e","set terminal svg;set title 'Hello Gnuplot';plot tan(x);"]);
             }
 
             function handleGnuplotOutput(text) {
@@ -45,15 +47,27 @@
 
 
             function appendSvg(svgString) {
+                document.getElementById("plot").remove();
                 let svg = svgString;
                 let blob = new Blob([svg], {type: 'image/svg+xml'});
                 let url = URL.createObjectURL(blob);
                 let image = document.createElement('img');  
+                image.id = "plot"
                 image.src = url;
                 image.addEventListener('load', () => URL.revokeObjectURL(url), {once: true});
-                document.getElementById("output").appendChild(image);
+                document.getElementById("image").appendChild(image);
             }
-
+            
+            function submitPlot(){
+                plotCommands = document.getElementById("commandBox").value;
+                plotCommand = "set terminal svg;";
+                var lines = plotCommands.split('\n');
+                for(var i = 0;i < lines.length;i++){
+                    plotCommand = plotCommand + lines[i] + ";"
+                }
+                console.log(plotCommand);
+                callMain(["-e",plotCommand]);
+            }
     
         </script>
     
