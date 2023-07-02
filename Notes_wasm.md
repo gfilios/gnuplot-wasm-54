@@ -3,7 +3,7 @@ To switch between views, press ⇧⌘V in the editor. You can view the preview s
 
 # Build Steps
 1. > emconfigure ./configure --without-tektronix -with-x=no
-2. > emmake make gnuplot 
+2. > emmake make gnuplot AM_LDFLAGS="--pre-js pre_js_gnuplot.js" EXEEXT=.js
 3. Patch Gnuplot file with Custom Module bevahvour
    see: https://emscripten.org/docs/api_reference/module.html
 
