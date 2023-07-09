@@ -17,8 +17,9 @@
             var receivingSVG = false;
 
             function runCommand(){
-                console.log("RunCommand");
-                callMain(["-e","set terminal svg;set title 'Hello Gnuplot';plot tan(x);"]);
+                console.log("RunCommand"); 
+                //callMain(["-c","set terminal svg;set title 'Hello Gnuplot';plot tan(x);"]);
+                var input = "set terminal svg\nset title 'Hello Gnuplot'\nplot sin(x)\n";
             }
 
             function handleGnuplotOutput(text) {
@@ -63,10 +64,12 @@
                 plotCommand = "set terminal svg;";
                 var lines = plotCommands.split('\n');
                 for(var i = 0;i < lines.length;i++){
-                    plotCommand = plotCommand + lines[i] + ";"
+                    plotCommand = plotCommand + lines[i] + "\n"
                 }
-                console.log(plotCommand);
-                callMain(["-e",plotCommand]);
+                //console.log(plotCommand);
+                var input = "set terminal svg\nset title 'Hello Gnuplot'\nplot sin(x)\n";
+                callMain();
+                //var input = "set terminal svg\nset title 'Hello Gnuplot'\nplot sin(x)\n";
             }
     
         </script>
